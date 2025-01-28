@@ -1,7 +1,9 @@
 <?php
 
+use Adianti\Control\TAction;
 use Adianti\Control\TPage;
 use Adianti\Control\TWindow;
+use Adianti\Widget\Base\TScript;
 use Adianti\Widget\Form\TEntry;
 use Adianti\Widget\Form\TLabel;
 use Adianti\Widget\Form\TText;
@@ -34,6 +36,24 @@ class GrupoMaterialForm extends TPage
         $row1->layout = ['col-sm-4', 'col-sm-8'];
         $row2->layout = ['col-sm-12'];
 
+        //Butão de Fechar a pagina
+        $btnClose = $this->form->addHeaderAction('Fechar', new TAction([$this, 'onCLose']), 'fa: fa-times');
+        $btnClose->class = 'btn btn-outline-danger';
+
+        //Botão de Salvar
+        $btnSave = $this->form->addAction('Salvar', new TAction([$this, 'onSave']), 'fa:save');
+        $btnSave->class = 'btn btn-success';
+
         parent::add($this->form);
+    }
+
+    public function onSave()
+    {
+
+    }
+
+    public function onCLose()
+    {
+        TScript::create("Template.closeRightPanel()");
     }
 }
