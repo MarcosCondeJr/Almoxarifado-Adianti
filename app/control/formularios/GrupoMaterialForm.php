@@ -84,11 +84,17 @@ class GrupoMaterialForm extends TPage
         }
     }
 
+    public function onEdit()
+    {
+        
+    }
+
     public function onCLose()
     {
         TScript::create("Template.closeRightPanel()");
         W5iSessao::removerObjetoEdicaoSessao(__CLASS__);
     }
+
 
     public function onShow()
     {
