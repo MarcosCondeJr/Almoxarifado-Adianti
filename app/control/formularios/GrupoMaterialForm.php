@@ -3,8 +3,10 @@
 use Adianti\Control\TAction;
 use Adianti\Control\TPage;
 use Adianti\Control\TWindow;
+use Adianti\Database\TTransaction;
 use Adianti\Widget\Base\TScript;
 use Adianti\Widget\Form\TEntry;
+use Adianti\Widget\Form\TForm;
 use Adianti\Widget\Form\TLabel;
 use Adianti\Widget\Form\TText;
 use Adianti\Wrapper\BootstrapFormBuilder;
@@ -29,11 +31,14 @@ class GrupoMaterialForm extends TPage
         $nmGrupo->setSize('100%');
         $dsGrupo->setSize('100%');
 
+        $cdGrupo->setEditable(false);
+
         $row1 = $this->form->addFields([new TLabel('Código (*)', 'red'), $cdGrupo],
-                                        [new TLabel('Nome (*)', 'red'), $nmGrupo]);
+                                       [new TLabel('Nome (*)', 'red'), $nmGrupo]);
+                                       
         $row2 = $this->form->addFields([new TLabel('Descrição'), $dsGrupo]);
 
-        $row1->layout = ['col-sm-4', 'col-sm-8'];
+        $row1->layout = ['col-sm-2', 'col-sm-10'];
         $row2->layout = ['col-sm-12'];
 
         //Butão de Fechar a pagina
@@ -55,5 +60,15 @@ class GrupoMaterialForm extends TPage
     public function onCLose()
     {
         TScript::create("Template.closeRightPanel()");
+    }
+
+    public function onShow()
+    {
+        TTransaction::open('conexao');
+
+        $item = AlmoxarifadoUtils::gerarCodigo('GrupoMaterial', 'cd_grupomaterial');
+        TForm::sendData('GrupoMaterialForm', $item, false, false);
+
+        TTransaction::close();
     }
 }
