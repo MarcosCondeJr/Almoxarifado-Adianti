@@ -4,6 +4,7 @@ use Adianti\Control\TAction;
 use Adianti\Control\TPage;
 use Adianti\Control\TWindow;
 use Adianti\Database\TTransaction;
+use Adianti\Validator\TRequiredValidator;
 use Adianti\Widget\Base\TScript;
 use Adianti\Widget\Dialog\TMessage;
 use Adianti\Widget\Dialog\TToast;
@@ -35,14 +36,16 @@ class GrupoMaterialForm extends TPage
         $dsGrupo->setSize('100%');
 
         $cdGrupo->setEditable(false);
-
+        
         $row1 = $this->form->addFields([new TLabel('Código (*)', 'red'), $cdGrupo],
-                                       [new TLabel('Nome (*)', 'red'), $nmGrupo]);
-                                       
+        [new TLabel('Nome (*)', 'red'), $nmGrupo]);
+        
         $row2 = $this->form->addFields([new TLabel('Descrição'), $dsGrupo]);
-
+        
         $row1->layout = ['col-sm-2', 'col-sm-10'];
         $row2->layout = ['col-sm-12'];
+        
+        $nmGrupo->addValidation('Nome', new TRequiredValidator);
 
         //Butão de Fechar a pagina
         $btnClose = $this->form->addHeaderAction('Fechar', new TAction([$this, 'onCLose']), 'fa: fa-times');
@@ -61,11 +64,16 @@ class GrupoMaterialForm extends TPage
         {
             TTransaction::open('conexao');
             $data = $this->form->getData();
+            $this->form->validate();
+
+            $grupoMaterial = new GrupoMaterial();
+            W5iSessao::obterObjetoEdicaoSessao($grupoMaterial,'id_grupomaterial', null, __CLASS__);
 
             $this->service = new GrupoMaterialService();
             $this->service->onSave($data);
 
-            TToast::show('success', 'Toast test 4', 'top right', 'far:check-circle' );
+            W5iSessao::removerObjetoEdicaoSessao(__CLASS__);
+            TToast::show('success', 'Cadastrado com Sucesso ', 'top right', 'far:check-circle' );
             TTransaction::close();
         }
         catch(Exception $e)
@@ -79,6 +87,7 @@ class GrupoMaterialForm extends TPage
     public function onCLose()
     {
         TScript::create("Template.closeRightPanel()");
+        W5iSessao::removerObjetoEdicaoSessao(__CLASS__);
     }
 
     public function onShow()

@@ -11,7 +11,7 @@ class AlmoxarifadoUtils
 
         if(!empty($result))
         {
-            $item->$coluna = $classe->$coluna + 1;
+            $item->$coluna = $result->$coluna + 1;
         }
         else
         {
