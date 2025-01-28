@@ -5,6 +5,8 @@ use Adianti\Control\TPage;
 use Adianti\Control\TWindow;
 use Adianti\Database\TTransaction;
 use Adianti\Widget\Base\TScript;
+use Adianti\Widget\Dialog\TMessage;
+use Adianti\Widget\Dialog\TToast;
 use Adianti\Widget\Form\TEntry;
 use Adianti\Widget\Form\TForm;
 use Adianti\Widget\Form\TLabel;
@@ -14,6 +16,7 @@ use Adianti\Wrapper\BootstrapFormBuilder;
 class GrupoMaterialForm extends TPage
 {
     private $form;
+    private $service;
 
     public function __construct()
     {
@@ -54,7 +57,23 @@ class GrupoMaterialForm extends TPage
 
     public function onSave()
     {
+        try
+        {
+            TTransaction::open('conexao');
+            $data = $this->form->getData();
 
+            $this->service = new GrupoMaterialService();
+            $this->service->onSave($data);
+
+            TToast::show('success', 'Toast test 4', 'top right', 'far:check-circle' );
+            TTransaction::close();
+        }
+        catch(Exception $e)
+        {
+            new TMessage('error', $e->getMessage());
+            $this->form->setData($data);
+            TTransaction::rollback();
+        }
     }
 
     public function onCLose()
