@@ -14,6 +14,7 @@ use Adianti\Widget\Datagrid\TDataGridColumn;
 use Adianti\Widget\Datagrid\TPageNavigation;
 use Adianti\Widget\Dialog\TAlert;
 use Adianti\Widget\Dialog\TMessage;
+use Adianti\Widget\Dialog\TQuestion;
 use Adianti\Widget\Util\TXMLBreadCrumb;
 use Adianti\Wrapper\BootstrapDatagridWrapper;
 
@@ -43,7 +44,7 @@ class GrupoMaterialDatagrid extends TPage
 
         //Ações do datagrid
         $btnEditar = new TDataGridAction(['GrupoMaterialForm', 'onEdit'], ['id_grupomaterial'=>'{id_grupomaterial}', 'register_state' => 'false']);
-        $btnExcluir = new TDataGridAction([$this, 'onDelete'], ['id_grupomaterial'=>'{id_grupomaterial}']);
+        $btnExcluir = new TDataGridAction([$this, 'onDelete'], ['id_grupomaterial'=>'{id_grupomaterial}', 'nm_grupomaterial' => '{nm_grupomaterial}']);
 
         $this->datagrid->addAction($btnEditar, 'Edit', 'far:edit blue');
         $this->datagrid->addAction($btnExcluir ,'Delete', 'far:trash-alt red');
@@ -130,8 +131,29 @@ class GrupoMaterialDatagrid extends TPage
         }
     }
 
-    public function onDelete()
+    public function onDelete($param)
     {
+        new TQuestion('Tem certeza que Deseja excluir o Grupo ' . $param['nm_grupomaterial'] . '?', new TAction([$this, 'delete'], ['key' => $param['key']]));
+        $this->onReload();
+    }
 
+    public function delete($param)
+    {
+        try
+        {
+            TTransaction::open('conexao');
+            $key = $param['key'];
+
+            $service = new GrupoMaterialService();
+            $service->onDelete($key);
+
+            TTransaction::close();
+        }
+        catch(Exception $e)
+        {
+            new TMessage('error', $e->getMessage());
+            TTransaction::rollback();
+        }
+        $this->onReload();
     }
 }
