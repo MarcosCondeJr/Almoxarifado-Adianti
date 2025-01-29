@@ -4,7 +4,7 @@ use Adianti\Database\TRecord;
 
 class UnidadeDeMedida extends TRecord
 {
-    const TABLENAME = 'unidade_de_medida';
+    const TABLENAME = 'unidade_medida';
     const PRIMARYKEY = 'id_unidademedida';
     const IDPOLICY = 'serial';
 

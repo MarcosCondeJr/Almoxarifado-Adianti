@@ -133,7 +133,8 @@ class GrupoMaterialDatagrid extends TPage
 
     public function onDelete($param)
     {
-        new TQuestion('Tem certeza que Deseja excluir o Grupo ' . $param['nm_grupomaterial'] . '?', new TAction([$this, 'delete'], ['key' => $param['key']]));
+        new TQuestion('Tem certeza que Deseja excluir o Grupo ' . $param['nm_grupomaterial'] . '?', new TAction([$this, 'delete'], 
+        ['key' => $param['key'], 'name' => $param['nm_grupomaterial']]));
         $this->onReload();
     }
 
@@ -142,10 +143,12 @@ class GrupoMaterialDatagrid extends TPage
         try
         {
             TTransaction::open('conexao');
+
             $key = $param['key'];
+            $name = $param['name'];
 
             $service = new GrupoMaterialService();
-            $service->onDelete($key);
+            $service->onDelete($key, $name);
 
             TTransaction::close();
         }

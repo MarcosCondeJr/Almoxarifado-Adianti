@@ -62,8 +62,8 @@ class GrupoMaterialForm extends TPage
             $this->service = new GrupoMaterialService();
             $this->service->onSave($data);
 
-            TApplication::loadPage('GrupoMaterialDatagrid', 'onReload');
-            TToast::show('success', 'Cadastrado com Sucesso ', 'top right', 'far:check-circle');
+            // TApplication::loadPage('GrupoMaterialDatagrid', 'onReload');
+            // TToast::show('success', 'Cadastrado com Sucesso ', 'top right', 'far:check-circle');
             TTransaction::close();
         } 
         catch (Exception $e) 
@@ -86,6 +86,7 @@ class GrupoMaterialForm extends TPage
 
             if (!empty($key)) 
             {
+                
                 $grupoMaterial = new GrupoMaterial($key);
                 W5iSessao::incluirObjetoEdicaoSessao($grupoMaterial, $key, 'id_grupomaterial',__CLASS__);
 

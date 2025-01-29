@@ -16,7 +16,7 @@ class Material extends TRecord
         parent::__construct($id_material, $callObjectLoad);
         parent::addAttribute('cd_material');
         parent::addAttribute('nm_material');
-        parent::addAttribute('id_unidade_medida');
+        parent::addAttribute('id_unidademedida');
         parent::addAttribute('id_grupomaterial');
         parent::addAttribute('qtd_estoque');
         parent::addAttribute('vl_medio');
