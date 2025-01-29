@@ -88,7 +88,7 @@
         <menu>
             <menuitem label='Grupo Material'>
                 <icon>fas: fa-box</icon>
-                <action>GrupoMaterialDatagrid</action>
+                <action>GrupoMaterialDatagrid#method=onReload</action>
             </menuitem>
             <menuitem label='Common page 2'>
                 <icon></icon>
