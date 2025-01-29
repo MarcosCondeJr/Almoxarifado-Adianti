@@ -1,15 +1,11 @@
 <?php
 
-use Adianti\Control\TAction;
 use Adianti\Control\TPage;
-use Adianti\Control\TWindow;
 use Adianti\Database\TTransaction;
-use Adianti\Registry\TSession;
 use Adianti\Validator\TRequiredValidator;
 use Adianti\Widget\Base\TScript;
 use Adianti\Widget\Dialog\TMessage;
 use Adianti\Widget\Dialog\TToast;
-use Adianti\Widget\Form\TCombo;
 use Adianti\Widget\Form\TEntry;
 use Adianti\Widget\Form\TForm;
 use Adianti\Widget\Form\TLabel;
