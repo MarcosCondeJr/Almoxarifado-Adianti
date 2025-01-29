@@ -4,10 +4,12 @@ use Adianti\Control\TAction;
 use Adianti\Control\TPage;
 use Adianti\Control\TWindow;
 use Adianti\Database\TTransaction;
+use Adianti\Registry\TSession;
 use Adianti\Validator\TRequiredValidator;
 use Adianti\Widget\Base\TScript;
 use Adianti\Widget\Dialog\TMessage;
 use Adianti\Widget\Dialog\TToast;
+use Adianti\Widget\Form\TCombo;
 use Adianti\Widget\Form\TEntry;
 use Adianti\Widget\Form\TForm;
 use Adianti\Widget\Form\TLabel;
@@ -36,47 +38,39 @@ class GrupoMaterialForm extends TPage
         $dsGrupo->setSize('100%');
 
         $cdGrupo->setEditable(false);
-        
-        $row1 = $this->form->addFields([new TLabel('Código (*)', 'red'), $cdGrupo],
-        [new TLabel('Nome (*)', 'red'), $nmGrupo]);
-        
+
+        $row1 = $this->form->addFields(
+            [new TLabel('Código (*)', 'red'), $cdGrupo],
+            [new TLabel('Nome (*)', 'red'), $nmGrupo]
+        );
+
         $row2 = $this->form->addFields([new TLabel('Descrição'), $dsGrupo]);
-        
+
         $row1->layout = ['col-sm-2', 'col-sm-10'];
         $row2->layout = ['col-sm-12'];
-        
+
         $nmGrupo->addValidation('Nome', new TRequiredValidator);
 
-        //Butão de Fechar a pagina
-        $btnClose = $this->form->addHeaderAction('Fechar', new TAction([$this, 'onCLose']), 'fa: fa-times');
-        $btnClose->class = 'btn btn-outline-danger';
-
-        //Botão de Salvar
-        $btnSave = $this->form->addAction('Salvar', new TAction([$this, 'onSave']), 'fa:save');
-        $btnSave->class = 'btn btn-success';
+        AlmoxarifadoUtils::tiposDeBotao('onShow', $this->form, 'GrupoMaterialForm');
 
         parent::add($this->form);
     }
 
-    public function onSave()
+    public function onSave($param)
     {
-        try
-        {
+        try {
             TTransaction::open('conexao');
             $data = $this->form->getData();
             $this->form->validate();
 
-            $grupoMaterial = new GrupoMaterial();
-            W5iSessao::obterObjetoEdicaoSessao($grupoMaterial,'id_grupomaterial', null, __CLASS__);
-
             $this->service = new GrupoMaterialService();
             $this->service->onSave($data);
 
-            W5iSessao::removerObjetoEdicaoSessao(__CLASS__);
-            TToast::show('success', 'Cadastrado com Sucesso ', 'top right', 'far:check-circle' );
+            TApplication::loadPage('GrupoMaterialDatagrid', 'onReload');
+            TToast::show('success', 'Cadastrado com Sucesso ', 'top right', 'far:check-circle');
             TTransaction::close();
-        }
-        catch(Exception $e)
+        } 
+        catch (Exception $e) 
         {
             new TMessage('error', $e->getMessage());
             $this->form->setData($data);
@@ -84,9 +78,28 @@ class GrupoMaterialForm extends TPage
         }
     }
 
-    public function onEdit()
+    public function onEdit($param = null)
     {
-        
+        try {
+            TTransaction::open('conexao');
+            $key = $param['key'];
+
+            AlmoxarifadoUtils::tiposDeBotao('onEdit', $this->form, 'GrupoMaterialForm');
+            self::habilitarCampos(['enable' => 0]);
+
+            if (!empty($key)) {
+                $grupoMaterial = new GrupoMaterial($key);
+                W5iSessao::incluirObjetoEdicaoSessao($grupoMaterial, $key, 'id_grupomaterial',__CLASS__);
+
+                if ($grupoMaterial) {
+                    $this->form->setData($grupoMaterial);
+                }
+            }
+            TTransaction::close();
+        } catch (Exception $e) {
+            new TMessage('error', $e->getMessage());
+            TTransaction::rollback();
+        }
     }
 
     public function onCLose()
@@ -103,6 +116,24 @@ class GrupoMaterialForm extends TPage
         $item = AlmoxarifadoUtils::gerarCodigo('GrupoMaterial', 'cd_grupomaterial');
         TForm::sendData('GrupoMaterialForm', $item, false, false);
 
+        W5iSessao::removerObjetoEdicaoSessao(__CLASS__);
         TTransaction::close();
+    }
+
+    public function habilitarCampos($param)
+    {
+        if ($param['enable'] == 1) 
+        {
+            $data = $this->form->getData();
+            TEntry::enableField('GrupoMaterialForm', 'nm_grupomaterial');
+            TText::enableField('GrupoMaterialForm', 'ds_grupomaterial');
+            TScript::create("document.querySelector('.tbutton_editar').style.display = 'none';");
+            TForm::sendData('GrupoMaterialForm', $data);
+        } 
+        else 
+        {
+            TEntry::disableField('GrupoMaterialForm', 'nm_grupomaterial');
+            TText::disableField('GrupoMaterialForm', 'ds_grupomaterial');
+        }
     }
 }
