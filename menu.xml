@@ -83,11 +83,12 @@
         </menu>
     </menuitem>
         
-    <menuitem label='Common pages'>
+    <menuitem label=' Cadastros'>
+    <icon>fas:far fa-edit</icon>
         <menu>
             <menuitem label='Grupo Material'>
-                <icon></icon>
-                <action>GrupoMaterialForm#method=onShow</action>
+                <icon>fas: fa-box</icon>
+                <action>GrupoMaterialDatagrid</action>
             </menuitem>
             <menuitem label='Common page 2'>
                 <icon></icon>
