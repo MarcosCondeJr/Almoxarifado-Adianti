@@ -80,23 +80,28 @@ class GrupoMaterialForm extends TPage
 
     public function onEdit($param = null)
     {
-        try {
+        try 
+        {
             TTransaction::open('conexao');
             $key = $param['key'];
 
             AlmoxarifadoUtils::tiposDeBotao('onEdit', $this->form, 'GrupoMaterialForm');
             self::habilitarCampos(['enable' => 0]);
 
-            if (!empty($key)) {
+            if (!empty($key)) 
+            {
                 $grupoMaterial = new GrupoMaterial($key);
                 W5iSessao::incluirObjetoEdicaoSessao($grupoMaterial, $key, 'id_grupomaterial',__CLASS__);
 
-                if ($grupoMaterial) {
+                if ($grupoMaterial) 
+                {
                     $this->form->setData($grupoMaterial);
                 }
             }
             TTransaction::close();
-        } catch (Exception $e) {
+        } 
+        catch (Exception $e) 
+        {
             new TMessage('error', $e->getMessage());
             TTransaction::rollback();
         }
