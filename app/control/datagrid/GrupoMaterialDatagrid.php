@@ -22,10 +22,12 @@ use Adianti\Widget\Form\TEntry;
 use Adianti\Widget\Form\TForm;
 use Adianti\Widget\Util\TXMLBreadCrumb;
 use Adianti\Wrapper\BootstrapDatagridWrapper;
+use Adianti\Wrapper\BootstrapFormBuilder;
 
 class GrupoMaterialDatagrid extends TPage
 {
     private $form;
+    private $panel;
     private $datagrid;
     private $pageNavigation;
 
@@ -51,18 +53,16 @@ class GrupoMaterialDatagrid extends TPage
         $this->datagrid->addColumn($colDsGrupo);
 
         //Ações do datagrid
-        $btnEditar = new TDataGridAction(['GrupoMaterialForm', 'onEdit'], ['id_grupomaterial'=>'{id_grupomaterial}', 'register_state' => 'false']);
-        $btnExcluir = new TDataGridAction([$this, 'onDelete'], ['id_grupomaterial'=>'{id_grupomaterial}', 'nm_grupomaterial' => '{nm_grupomaterial}']);
+        $btnEditar = new TDataGridAction(['GrupoMaterialForm', 'onEdit'], ['id_grupomaterial' => '{id_grupomaterial}', 'register_state' => 'false']);
+        $btnExcluir = new TDataGridAction([$this, 'onDelete'], ['id_grupomaterial' => '{id_grupomaterial}', 'nm_grupomaterial' => '{nm_grupomaterial}']);
 
         $this->datagrid->addAction($btnEditar, 'Editar', 'far:edit blue');
-        $this->datagrid->addAction($btnExcluir ,'Deletar', 'far:trash-alt red');
+        $this->datagrid->addAction($btnExcluir, 'Deletar', 'far:trash-alt red');
 
         $this->datagrid->createModel();
 
         //Formulario de Pesquisas
         $this->form = new TForm('GrupoMaterialSearch');
-        $this->form->onsubmit = 'return false';
-
         $this->form->add($this->datagrid);
         $this->form->style = 'overflow-x:auto';
 
@@ -79,24 +79,24 @@ class GrupoMaterialDatagrid extends TPage
         $nmGrupoMaterial->setSize('100%');
         $dsGrupo->setSize('100%');
 
-        $cdGrupo->tabindex = -1;
-        $nmGrupoMaterial->tabindex = -1;
-        $dsGrupo->tabindex = -1;
+        $this->form->setData( TSession::getValue('GrupoMaterialDatagrid_filter_data'));
 
-        $this->form->setData( TSession::getValue(__CLASS__.'_filter_data'));
-
-        $cdGrupo->setExitAction(new TAction([$this, 'onSearch'], ['static' => 1]));
+        $cdGrupo->setExitAction(new TAction([$this, 'onSearch'], ['static' => 1]));        
         $nmGrupoMaterial->setExitAction(new TAction([$this, 'onSearch'], ['static' => 1]));
         $dsGrupo->setExitAction(new TAction([$this, 'onSearch'], ['static' => 1]));        
+
+        // $btnSearch = $this->form->addAction('', new TAction([$this, 'onSearch']), 'fa:search');
+        // $btnSearch->class = 'btn btn-primary';
 
         $tr = new TElement('tr');
         $this->datagrid->prependRow($tr);
 
-        $tr->add( TElement::tag('td', ''));
-        $tr->add( TElement::tag('td', ''));
-        $tr->add( TElement::tag('td', $cdGrupo));
-        $tr->add( TElement::tag('td', $nmGrupoMaterial));
-        $tr->add( TElement::tag('td', $dsGrupo));
+        $tr->add(TElement::tag('td', ''));
+        $tr->add(TElement::tag('td', ''));
+        $tr->add(TElement::tag('td', $cdGrupo));
+        $tr->add(TElement::tag('td', $nmGrupoMaterial));
+        $tr->add(TElement::tag('td', $dsGrupo));
+        // $tr->add( TElement::tag('td', $btnSearch));
 
         $this->form->addField($cdGrupo);
         $this->form->addField($nmGrupoMaterial);
@@ -108,30 +108,30 @@ class GrupoMaterialDatagrid extends TPage
         $this->pageNavigation->enableCounters();
 
         //Cria o Painel
-        $panel = new TPanelGroup('Listagem Grupo de Material');
-        $panel->add($this->datagrid);
-        $panel->addFooter($this->pageNavigation);
+        $this->panel = new TPanelGroup('Listagem Grupo de Material');
+        $this->panel->addFooter($this->pageNavigation);
+        $this->panel->add($this->form);
 
         //Botão de atualizar a pagina
-        $btnAtualizar = $panel->addHeaderActionLink('Atualizar', new TAction([$this, 'onReload']), 'fa:repeat');
-        $btnAtualizar->class = 'btn btn-primary me-1';
-        
+        $btnAtualizar = $this->panel->addHeaderActionLink('Atualizar', new TAction([$this, 'onReload']), 'fa:repeat');
+        $btnAtualizar->class = 'btn btn-primary me-1 order-1';
+
         //Botão para cadastrar um novo registro
-        $btnNovo = $panel->addHeaderActionLink('Novo', new TAction(['GrupoMaterialForm', 'onShow']), 'fa:plus');
-        $btnNovo->class = 'btn btn-success';
+        $btnNovo = $this->panel->addHeaderActionLink('Novo', new TAction(['GrupoMaterialForm', 'onShow']), 'fa:plus');
+        $btnNovo->class = 'btn btn-success order-2';
+
 
         $vbox = new TVBox;
         $vbox->style = 'width: 100%';
         $vbox->add(new TXMLBreadCrumb('menu.xml', __CLASS__));
-        $vbox->add($panel);
+        $vbox->add($this->panel);
 
         parent::add($vbox);
     }
 
     public function onReload($param = null)
     {
-        try
-        {
+        try {
             TTransaction::open('conexao');
 
             //Istancia o Repositorio (model)
@@ -141,28 +141,28 @@ class GrupoMaterialDatagrid extends TPage
             //istancia o criterio
             $criterio = new TCriteria;
 
-            if(empty($param['order']))
-            {
+            if (empty($param['order'])) {
                 $param['order'] = 'id_grupomaterial';
             }
 
             $criterio->setProperties($param);
             $criterio->setProperties('limit', $limit);
-
+            
             if(TSession::getValue('filtros'))
             {
                 foreach(TSession::getValue('filtros') as $item)
                 {
                     $criterio->add($item);
-                }
+                }    
             }
-
+            
             $grupoMaterial = $repository->load($criterio);
+            
             $this->datagrid->clear();
-
-            if($grupoMaterial)
+            
+            if ($grupoMaterial) 
             {
-                foreach($grupoMaterial as $grupos)
+                foreach ($grupoMaterial as $grupos) 
                 {
                     $this->datagrid->addItem($grupos);
                 }
@@ -178,9 +178,7 @@ class GrupoMaterialDatagrid extends TPage
 
             TTransaction::close();
             $this->loaded = true;
-        }
-        catch(Exception $e)
-        {
+        } catch (Exception $e) {
             new TMessage('error', $e->getMessage());
             TTransaction::rollback();
         }
@@ -188,15 +186,16 @@ class GrupoMaterialDatagrid extends TPage
 
     public function onDelete($param)
     {
-        new TQuestion('Tem certeza que Deseja excluir o Grupo ' . $param['nm_grupomaterial'] . '?', new TAction([$this, 'delete'], 
-        ['key' => $param['key'], 'name' => $param['nm_grupomaterial']]));
+        new TQuestion('Tem certeza que Deseja excluir o Grupo ' . $param['nm_grupomaterial'] . '?', new TAction(
+            [$this, 'delete'],
+            ['key' => $param['key'], 'name' => $param['nm_grupomaterial']]
+        ));
         $this->onReload();
     }
 
     public function delete($param)
     {
-        try
-        {
+        try {
             TTransaction::open('conexao');
 
             $key = $param['key'];
@@ -206,9 +205,7 @@ class GrupoMaterialDatagrid extends TPage
             $service->onDelete($key, $name);
 
             TTransaction::close();
-        }
-        catch(Exception $e)
-        {
+        } catch (Exception $e) {
             new TMessage('error', $e->getMessage());
             TTransaction::rollback();
         }
@@ -217,29 +214,35 @@ class GrupoMaterialDatagrid extends TPage
 
     public function onSearch($param)
     {
+        //butão de limpar o form
+        $btnLimpar = $this->panel->addHeaderActionLink('Limpar', new TAction([$this, 'onClear']), 'fa:eraser red');
+        $btnLimpar->class = 'btn btn-outline-secondary tbutton_limpar me-1';
+
         $data = $this->form->getData();
         TSession::delValue('filtros');
-
         $filtros = [];
 
         TSession::setValue('filtros', null);
 
-        if(isset($data->cd_grupomaterial) && is_numeric($data->cd_grupomaterial) && !empty($data->cd_grupomaterial))
-        {
-            $filtros[] = new TFilter('cd_material', '=', "{$data->cd_grupomaterial}");
+        if (isset($data->cd_grupomaterial) && is_numeric($data->cd_grupomaterial) && !empty($data->cd_grupomaterial)) {
+            $filtros[] = new TFilter('cd_grupomaterial', '=', "{$data->cd_grupomaterial}");
         }
 
-        if(isset($data->nm_grupomaterial) && !empty($data->nm_grupomaterial))
-        {
-            $filtros[] = new TFilter('unaccent(nm_material)', 'ILIKE', "{$data->nm_grupomaterial}");
+        if (isset($data->nm_grupomaterial) && !empty($data->nm_grupomaterial)) {
+            $filtros[] = new TFilter('unaccent(nm_grupomaterial)', 'ILIKE', "{$data->nm_grupomaterial}");
         }
 
-        if(isset($data->ds_grupomaterial) && !empty($data->ds_grupomaterial))
-        {
-            $filtros[] = new TFilter('unaccent(ds_material)', 'ILIKE' , "{$data->ds_grupomaterial}");
+        if (isset($data->ds_grupomaterial) && !empty($data->ds_grupomaterial)) {
+            $filtros[] = new TFilter('unaccent(ds_grupomaterial)', 'ILIKE', "{$data->ds_grupomaterial}");
         }
 
         TSession::setValue('filtros', $filtros);
         $this->onReload($param);
+    }
+
+    public function onClear()
+    {
+        $this->form->clear();
+        $this->onReload();
     }
 }
