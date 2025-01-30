@@ -29,10 +29,10 @@ class AlmoxarifadoUtils
         {
             $btnEditar = $form->addHeaderAction('Editar', new TAction([$classe, 'habilitarCampos'], ['enable' => 1]), 'fas:far fa-edit');
             $btnEditar->addStyleClass('tbutton_editar');
-            $btnEditar->class = 'btn btn-outline-primary me-1';
+            $btnEditar->class = 'btn btn-outline-primary me-1 tbutton_editar';
 
             $btnCancelar = $form->addAction('Cancelar', new TAction([$classe, 'onClose']), 'fa:ban');
-            $btnCancelar->class = 'btn btn-danger';
+            $btnCancelar->class = 'btn btn-danger tbutton_cancelar';
         }
         else
         {
@@ -41,10 +41,10 @@ class AlmoxarifadoUtils
             
             //Botão de Salvar
             $btnSave = $form->addAction('Salvar', new TAction([$classe, 'onSave']), 'fa:save');
-            $btnSave->class = 'btn btn-success';
+            $btnSave->class = 'btn btn-success tbutton_salvar';
 
-            $btnLimpar = $form->addAction('Limpar', new TAction([$classe, 'onShow']), 'fa:eraser red');
-            $btnLimpar->class = 'btn btn-outline-secondary';
+            $btnLimpar = $form->addAction('Limpar', new TAction([$classe, 'onClear']), 'fa:eraser red');
+            $btnLimpar->class = 'btn btn-outline-secondary tbutton_limpar';
         }
     }
 }

@@ -137,12 +137,23 @@ class GrupoMaterialForm extends TPage
         } 
         else 
         {
-            //Desabilita o botão de salvar
-            TScript::create("document.querySelector('.btn-success').style.display = 'none';");
-            TScript::create("document.querySelector('.btn-outline-secondary').style.display = 'none';");
+            //Desabilita o botão de salvar e limpar
+            TScript::create("document.querySelector('.tbutton_salvar').style.display = 'none';");
+            TScript::create("document.querySelector('.tbutton_limpar').style.display = 'none';");
 
             TEntry::disableField('GrupoMaterialForm', 'nm_grupomaterial');
             TText::disableField('GrupoMaterialForm', 'ds_grupomaterial');
         }
+    }
+
+    public function onClear()
+    {
+        //Pega o codigo existente e manten na tela
+        $data = $this->form->getData();
+        $this->form->clear();
+        
+        $item = new stdClass();
+        $item->cd_grupomaterial =  $data->cd_grupomaterial;
+        TForm::sendData('GrupoMaterialForm', $item, false, false);
     }
 }

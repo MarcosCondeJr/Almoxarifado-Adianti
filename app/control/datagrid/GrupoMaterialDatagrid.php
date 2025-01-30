@@ -3,9 +3,11 @@
 use Adianti\Control\TAction;
 use Adianti\Control\TPage;
 use Adianti\Database\TCriteria;
+use Adianti\Database\TFilter;
 use Adianti\Database\TRepository;
 use Adianti\Database\TTransaction;
 use Adianti\Registry\TSession;
+use Adianti\Widget\Base\TElement;
 use Adianti\Widget\Container\TPanelGroup;
 use Adianti\Widget\Container\TVBox;
 use Adianti\Widget\Datagrid\TDataGrid;
@@ -15,13 +17,19 @@ use Adianti\Widget\Datagrid\TPageNavigation;
 use Adianti\Widget\Dialog\TAlert;
 use Adianti\Widget\Dialog\TMessage;
 use Adianti\Widget\Dialog\TQuestion;
+use Adianti\Widget\Form\TButton;
+use Adianti\Widget\Form\TEntry;
+use Adianti\Widget\Form\TForm;
 use Adianti\Widget\Util\TXMLBreadCrumb;
 use Adianti\Wrapper\BootstrapDatagridWrapper;
 
 class GrupoMaterialDatagrid extends TPage
 {
+    private $form;
     private $datagrid;
     private $pageNavigation;
+
+    // use Adianti\Base\AdiantiStandardListTrait;
 
     public function __construct()
     {
@@ -29,7 +37,7 @@ class GrupoMaterialDatagrid extends TPage
         $this->datagrid = new BootstrapDatagridWrapper(new TDataGrid);
 
         //Colunas do datagrid
-        $colCdGrupo = new TDataGridColumn('cd_grupomaterial', 'Código', 'center', '30%');
+        $colCdGrupo = new TDataGridColumn('cd_grupomaterial', 'Código', 'center', '20%');
         $colNmGrupo = new TDataGridColumn('nm_grupomaterial', 'Nome', 'left', '50%');
         $colDsGrupo = new TDataGridColumn('ds_grupomaterial', 'Descrição', 'left', '30%');
 
@@ -51,6 +59,49 @@ class GrupoMaterialDatagrid extends TPage
 
         $this->datagrid->createModel();
 
+        //Formulario de Pesquisas
+        $this->form = new TForm('GrupoMaterialSearch');
+        $this->form->onsubmit = 'return false';
+
+        $this->form->add($this->datagrid);
+        $this->form->style = 'overflow-x:auto';
+
+        //Campos do formulário
+        $cdGrupo         = new TEntry('cd_grupomaterial');
+        $nmGrupoMaterial = new TEntry('nm_grupomaterial');
+        $dsGrupo         = new TEntry('ds_grupomaterial');
+
+        $cdGrupo->setMaxLength(5);
+        $nmGrupoMaterial->setMaxLength(40);
+        $dsGrupo->setMaxLength(60);
+
+        $cdGrupo->setSize('100%');
+        $nmGrupoMaterial->setSize('100%');
+        $dsGrupo->setSize('100%');
+
+        $cdGrupo->tabindex = -1;
+        $nmGrupoMaterial->tabindex = -1;
+        $dsGrupo->tabindex = -1;
+
+        $this->form->setData( TSession::getValue(__CLASS__.'_filter_data'));
+
+        $cdGrupo->setExitAction(new TAction([$this, 'onSearch'], ['static' => 1]));
+        $nmGrupoMaterial->setExitAction(new TAction([$this, 'onSearch'], ['static' => 1]));
+        $dsGrupo->setExitAction(new TAction([$this, 'onSearch'], ['static' => 1]));        
+
+        $tr = new TElement('tr');
+        $this->datagrid->prependRow($tr);
+
+        $tr->add( TElement::tag('td', ''));
+        $tr->add( TElement::tag('td', ''));
+        $tr->add( TElement::tag('td', $cdGrupo));
+        $tr->add( TElement::tag('td', $nmGrupoMaterial));
+        $tr->add( TElement::tag('td', $dsGrupo));
+
+        $this->form->addField($cdGrupo);
+        $this->form->addField($nmGrupoMaterial);
+        $this->form->addField($dsGrupo);
+
         //Cria a paginação
         $this->pageNavigation = new TPageNavigation();
         $this->pageNavigation->setAction(new TAction([$this, 'onReload']));
@@ -61,9 +112,13 @@ class GrupoMaterialDatagrid extends TPage
         $panel->add($this->datagrid);
         $panel->addFooter($this->pageNavigation);
 
+        //Botão de atualizar a pagina
+        $btnAtualizar = $panel->addHeaderActionLink('Atualizar', new TAction([$this, 'onReload']), 'fa:repeat');
+        $btnAtualizar->class = 'btn btn-primary me-1';
+        
         //Botão para cadastrar um novo registro
         $btnNovo = $panel->addHeaderActionLink('Novo', new TAction(['GrupoMaterialForm', 'onShow']), 'fa:plus');
-        $btnNovo->class = 'btn btn-primary';
+        $btnNovo->class = 'btn btn-success';
 
         $vbox = new TVBox;
         $vbox->style = 'width: 100%';
@@ -158,5 +213,33 @@ class GrupoMaterialDatagrid extends TPage
             TTransaction::rollback();
         }
         $this->onReload();
+    }
+
+    public function onSearch($param)
+    {
+        $data = $this->form->getData();
+        TSession::delValue('filtros');
+
+        $filtros = [];
+
+        TSession::setValue('filtros', null);
+
+        if(isset($data->cd_grupomaterial) && is_numeric($data->cd_grupomaterial) && !empty($data->cd_grupomaterial))
+        {
+            $filtros[] = new TFilter('cd_material', '=', "{$data->cd_grupomaterial}");
+        }
+
+        if(isset($data->nm_grupomaterial) && !empty($data->nm_grupomaterial))
+        {
+            $filtros[] = new TFilter('unaccent(nm_material)', 'ILIKE', "{$data->nm_grupomaterial}");
+        }
+
+        if(isset($data->ds_grupomaterial) && !empty($data->ds_grupomaterial))
+        {
+            $filtros[] = new TFilter('unaccent(ds_material)', 'ILIKE' , "{$data->ds_grupomaterial}");
+        }
+
+        TSession::setValue('filtros', $filtros);
+        $this->onReload($param);
     }
 }
