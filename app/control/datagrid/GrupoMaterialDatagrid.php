@@ -46,8 +46,8 @@ class GrupoMaterialDatagrid extends TPage
         $btnEditar = new TDataGridAction(['GrupoMaterialForm', 'onEdit'], ['id_grupomaterial'=>'{id_grupomaterial}', 'register_state' => 'false']);
         $btnExcluir = new TDataGridAction([$this, 'onDelete'], ['id_grupomaterial'=>'{id_grupomaterial}', 'nm_grupomaterial' => '{nm_grupomaterial}']);
 
-        $this->datagrid->addAction($btnEditar, 'Edit', 'far:edit blue');
-        $this->datagrid->addAction($btnExcluir ,'Delete', 'far:trash-alt red');
+        $this->datagrid->addAction($btnEditar, 'Editar', 'far:edit blue');
+        $this->datagrid->addAction($btnExcluir ,'Deletar', 'far:trash-alt red');
 
         $this->datagrid->createModel();
 

@@ -61,7 +61,7 @@ class GrupoMaterialForm extends TPage
 
             $this->service = new GrupoMaterialService();
             $this->service->onSave($data);
-
+            
             TApplication::loadPage('GrupoMaterialDatagrid', 'onReload');
             TToast::show('success', 'Cadastrado com Sucesso ', 'top right', 'far:check-circle');
             TTransaction::close();
@@ -78,6 +78,7 @@ class GrupoMaterialForm extends TPage
     {
         try 
         {
+            // dump($param);
             TTransaction::open('conexao');
             $key = $param['key'];
 
@@ -129,11 +130,17 @@ class GrupoMaterialForm extends TPage
             $data = $this->form->getData();
             TEntry::enableField('GrupoMaterialForm', 'nm_grupomaterial');
             TText::enableField('GrupoMaterialForm', 'ds_grupomaterial');
+
+            //Desabilita butão
             TScript::create("document.querySelector('.tbutton_editar').style.display = 'none';");
             TForm::sendData('GrupoMaterialForm', $data);
         } 
         else 
         {
+            //Desabilita o botão de salvar
+            TScript::create("document.querySelector('.btn-success').style.display = 'none';");
+            TScript::create("document.querySelector('.btn-outline-secondary').style.display = 'none';");
+
             TEntry::disableField('GrupoMaterialForm', 'nm_grupomaterial');
             TText::disableField('GrupoMaterialForm', 'ds_grupomaterial');
         }

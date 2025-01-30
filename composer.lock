@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bfeac77497fc47c7d40098db8568a78b",
+    "content-hash": "665a903a7a3912eb6243d7596d006a32",
     "packages": [
         {
             "name": "adianti/pdfdesigner",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/adianti/pdfdesigner.git",
-                "reference": "07d6d55dda4db801964d28becd868729f434ecd6"
+                "reference": "d145c44530af6a5f285ec00d7fffd5d6d8085bbb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/adianti/pdfdesigner/zipball/07d6d55dda4db801964d28becd868729f434ecd6",
-                "reference": "07d6d55dda4db801964d28becd868729f434ecd6",
+                "url": "https://api.github.com/repos/adianti/pdfdesigner/zipball/d145c44530af6a5f285ec00d7fffd5d6d8085bbb",
+                "reference": "d145c44530af6a5f285ec00d7fffd5d6d8085bbb",
                 "shasum": ""
             },
             "require": {
@@ -50,7 +50,7 @@
                 "issues": "https://github.com/adianti/pdfdesigner/issues",
                 "source": "https://github.com/adianti/pdfdesigner"
             },
-            "time": "2023-10-30T19:09:11+00:00"
+            "time": "2025-01-28T00:09:02+00:00"
         },
         {
             "name": "adianti/plugins",
@@ -196,16 +196,16 @@
         },
         {
             "name": "dompdf/dompdf",
-            "version": "v3.0.0",
+            "version": "v3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dompdf/dompdf.git",
-                "reference": "fbc7c5ee5d94f7a910b78b43feb7931b7f971b59"
+                "reference": "a51bd7a063a65499446919286fb18b518177155a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dompdf/dompdf/zipball/fbc7c5ee5d94f7a910b78b43feb7931b7f971b59",
-                "reference": "fbc7c5ee5d94f7a910b78b43feb7931b7f971b59",
+                "url": "https://api.github.com/repos/dompdf/dompdf/zipball/a51bd7a063a65499446919286fb18b518177155a",
+                "reference": "a51bd7a063a65499446919286fb18b518177155a",
                 "shasum": ""
             },
             "require": {
@@ -221,7 +221,7 @@
                 "ext-json": "*",
                 "ext-zip": "*",
                 "mockery/mockery": "^1.3",
-                "phpunit/phpunit": "^7.5 || ^8 || ^9 || ^10",
+                "phpunit/phpunit": "^7.5 || ^8 || ^9 || ^10 || ^11",
                 "squizlabs/php_codesniffer": "^3.5",
                 "symfony/process": "^4.4 || ^5.4 || ^6.2 || ^7.0"
             },
@@ -254,22 +254,22 @@
             "homepage": "https://github.com/dompdf/dompdf",
             "support": {
                 "issues": "https://github.com/dompdf/dompdf/issues",
-                "source": "https://github.com/dompdf/dompdf/tree/v3.0.0"
+                "source": "https://github.com/dompdf/dompdf/tree/v3.1.0"
             },
-            "time": "2024-04-29T14:01:28+00:00"
+            "time": "2025-01-15T14:09:04+00:00"
         },
         {
             "name": "dompdf/php-font-lib",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dompdf/php-font-lib.git",
-                "reference": "991d6a954f6bbd7e41022198f00586b230731441"
+                "reference": "6137b7d4232b7f16c882c75e4ca3991dbcf6fe2d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dompdf/php-font-lib/zipball/991d6a954f6bbd7e41022198f00586b230731441",
-                "reference": "991d6a954f6bbd7e41022198f00586b230731441",
+                "url": "https://api.github.com/repos/dompdf/php-font-lib/zipball/6137b7d4232b7f16c882c75e4ca3991dbcf6fe2d",
+                "reference": "6137b7d4232b7f16c882c75e4ca3991dbcf6fe2d",
                 "shasum": ""
             },
             "require": {
@@ -299,9 +299,9 @@
             "homepage": "https://github.com/dompdf/php-font-lib",
             "support": {
                 "issues": "https://github.com/dompdf/php-font-lib/issues",
-                "source": "https://github.com/dompdf/php-font-lib/tree/1.0.0"
+                "source": "https://github.com/dompdf/php-font-lib/tree/1.0.1"
             },
-            "time": "2024-04-29T13:40:38+00:00"
+            "time": "2024-12-02T14:37:59+00:00"
         },
         {
             "name": "dompdf/php-svg-lib",
@@ -351,16 +351,16 @@
         },
         {
             "name": "firebase/php-jwt",
-            "version": "v6.10.1",
+            "version": "v6.11.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/firebase/php-jwt.git",
-                "reference": "500501c2ce893c824c801da135d02661199f60c5"
+                "reference": "8f718f4dfc9c5d5f0c994cdfd103921b43592712"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/500501c2ce893c824c801da135d02661199f60c5",
-                "reference": "500501c2ce893c824c801da135d02661199f60c5",
+                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/8f718f4dfc9c5d5f0c994cdfd103921b43592712",
+                "reference": "8f718f4dfc9c5d5f0c994cdfd103921b43592712",
                 "shasum": ""
             },
             "require": {
@@ -408,9 +408,9 @@
             ],
             "support": {
                 "issues": "https://github.com/firebase/php-jwt/issues",
-                "source": "https://github.com/firebase/php-jwt/tree/v6.10.1"
+                "source": "https://github.com/firebase/php-jwt/tree/v6.11.0"
             },
-            "time": "2024-05-18T18:05:11+00:00"
+            "time": "2025-01-23T05:11:06+00:00"
         },
         {
             "name": "jfcherng/php-color-output",
@@ -655,12 +655,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jrgp/linfo.git",
-                "reference": "69c76c4613932d4a3ca36c36faebb122093522f6"
+                "reference": "cddc6963dc507342bc3b6bf828cf87fe2aa55a2e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jrgp/linfo/zipball/69c76c4613932d4a3ca36c36faebb122093522f6",
-                "reference": "69c76c4613932d4a3ca36c36faebb122093522f6",
+                "url": "https://api.github.com/repos/jrgp/linfo/zipball/cddc6963dc507342bc3b6bf828cf87fe2aa55a2e",
+                "reference": "cddc6963dc507342bc3b6bf828cf87fe2aa55a2e",
                 "shasum": ""
             },
             "require": {
@@ -868,12 +868,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/pablodalloglio/phprtflite.git",
-                "reference": "591081612a66d5c770b847a0420a61c8d2793e66"
+                "reference": "df62039947efea1c20568b624553e0e9ba1adbea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pablodalloglio/phprtflite/zipball/591081612a66d5c770b847a0420a61c8d2793e66",
-                "reference": "591081612a66d5c770b847a0420a61c8d2793e66",
+                "url": "https://api.github.com/repos/pablodalloglio/phprtflite/zipball/df62039947efea1c20568b624553e0e9ba1adbea",
+                "reference": "df62039947efea1c20568b624553e0e9ba1adbea",
                 "shasum": ""
             },
             "default-branch": true,
@@ -885,7 +885,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "GPL-3.0"
+                "LGPL-3.0"
             ],
             "authors": [
                 {
@@ -898,7 +898,7 @@
                 "issues": "https://github.com/pablodalloglio/phprtflite/issues",
                 "source": "https://github.com/pablodalloglio/phprtflite/tree/master"
             },
-            "time": "2023-10-30T19:07:45+00:00"
+            "time": "2024-10-28T18:50:36+00:00"
         },
         {
             "name": "pablodalloglio/spreadsheet_excel_writer",
@@ -1030,16 +1030,16 @@
         },
         {
             "name": "phpmailer/phpmailer",
-            "version": "v6.9.2",
+            "version": "v6.9.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPMailer/PHPMailer.git",
-                "reference": "a7b17b42fa4887c92146243f3d2f4ccb962af17c"
+                "reference": "2f5c94fe7493efc213f643c23b1b1c249d40f47e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/a7b17b42fa4887c92146243f3d2f4ccb962af17c",
-                "reference": "a7b17b42fa4887c92146243f3d2f4ccb962af17c",
+                "url": "https://api.github.com/repos/PHPMailer/PHPMailer/zipball/2f5c94fe7493efc213f643c23b1b1c249d40f47e",
+                "reference": "2f5c94fe7493efc213f643c23b1b1c249d40f47e",
                 "shasum": ""
             },
             "require": {
@@ -1099,7 +1099,7 @@
             "description": "PHPMailer is a full-featured email creation and transfer class for PHP",
             "support": {
                 "issues": "https://github.com/PHPMailer/PHPMailer/issues",
-                "source": "https://github.com/PHPMailer/PHPMailer/tree/v6.9.2"
+                "source": "https://github.com/PHPMailer/PHPMailer/tree/v6.9.3"
             },
             "funding": [
                 {
@@ -1107,7 +1107,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-10-09T10:07:50+00:00"
+            "time": "2024-11-24T18:04:13+00:00"
         },
         {
             "name": "picqer/php-barcode-generator",
@@ -1240,24 +1240,24 @@
         },
         {
             "name": "sabberworm/php-css-parser",
-            "version": "v8.6.0",
+            "version": "v8.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MyIntervals/PHP-CSS-Parser.git",
-                "reference": "d2fb94a9641be84d79c7548c6d39bbebba6e9a70"
+                "reference": "f414ff953002a9b18e3a116f5e462c56f21237cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MyIntervals/PHP-CSS-Parser/zipball/d2fb94a9641be84d79c7548c6d39bbebba6e9a70",
-                "reference": "d2fb94a9641be84d79c7548c6d39bbebba6e9a70",
+                "url": "https://api.github.com/repos/MyIntervals/PHP-CSS-Parser/zipball/f414ff953002a9b18e3a116f5e462c56f21237cf",
+                "reference": "f414ff953002a9b18e3a116f5e462c56f21237cf",
                 "shasum": ""
             },
             "require": {
                 "ext-iconv": "*",
-                "php": ">=5.6.20"
+                "php": "^5.6.20 || ^7.0.0 || ~8.0.0 || ~8.1.0 || ~8.2.0 || ~8.3.0 || ~8.4.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^5.7.27"
+                "phpunit/phpunit": "5.7.27 || 6.5.14 || 7.5.20 || 8.5.40"
             },
             "suggest": {
                 "ext-mbstring": "for parsing UTF-8 CSS"
@@ -1299,9 +1299,9 @@
             ],
             "support": {
                 "issues": "https://github.com/MyIntervals/PHP-CSS-Parser/issues",
-                "source": "https://github.com/MyIntervals/PHP-CSS-Parser/tree/v8.6.0"
+                "source": "https://github.com/MyIntervals/PHP-CSS-Parser/tree/v8.7.0"
             },
-            "time": "2024-07-01T07:33:21+00:00"
+            "time": "2024-10-27T17:38:32+00:00"
         },
         {
             "name": "spomky-labs/otphp",
@@ -1387,16 +1387,16 @@
         },
         {
             "name": "symfony/deprecation-contracts",
-            "version": "v3.5.0",
+            "version": "v3.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/deprecation-contracts.git",
-                "reference": "0e0d29ce1f20deffb4ab1b016a7257c4f1e789a1"
+                "reference": "74c71c939a79f7d5bf3c1ce9f5ea37ba0114c6f6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/deprecation-contracts/zipball/0e0d29ce1f20deffb4ab1b016a7257c4f1e789a1",
-                "reference": "0e0d29ce1f20deffb4ab1b016a7257c4f1e789a1",
+                "url": "https://api.github.com/repos/symfony/deprecation-contracts/zipball/74c71c939a79f7d5bf3c1ce9f5ea37ba0114c6f6",
+                "reference": "74c71c939a79f7d5bf3c1ce9f5ea37ba0114c6f6",
                 "shasum": ""
             },
             "require": {
@@ -1404,12 +1404,12 @@
             },
             "type": "library",
             "extra": {
+                "thanks": {
+                    "url": "https://github.com/symfony/contracts",
+                    "name": "symfony/contracts"
+                },
                 "branch-alias": {
                     "dev-main": "3.5-dev"
-                },
-                "thanks": {
-                    "name": "symfony/contracts",
-                    "url": "https://github.com/symfony/contracts"
                 }
             },
             "autoload": {
@@ -1434,7 +1434,7 @@
             "description": "A generic function and convention to trigger deprecation notices",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/deprecation-contracts/tree/v3.5.0"
+                "source": "https://github.com/symfony/deprecation-contracts/tree/v3.5.1"
             },
             "funding": [
                 {
@@ -1450,7 +1450,170 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-04-18T09:32:20+00:00"
+            "time": "2024-09-25T14:20:29+00:00"
+        },
+        {
+            "name": "symfony/polyfill-mbstring",
+            "version": "v1.31.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-mbstring.git",
+                "reference": "85181ba99b2345b0ef10ce42ecac37612d9fd341"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/85181ba99b2345b0ef10ce42ecac37612d9fd341",
+                "reference": "85181ba99b2345b0ef10ce42ecac37612d9fd341",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2"
+            },
+            "provide": {
+                "ext-mbstring": "*"
+            },
+            "suggest": {
+                "ext-mbstring": "For best performance"
+            },
+            "type": "library",
+            "extra": {
+                "thanks": {
+                    "url": "https://github.com/symfony/polyfill",
+                    "name": "symfony/polyfill"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Mbstring\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill for the Mbstring extension",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "mbstring",
+                "polyfill",
+                "portable",
+                "shim"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.31.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2024-09-09T11:45:10+00:00"
+        },
+        {
+            "name": "symfony/var-dumper",
+            "version": "v7.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/var-dumper.git",
+                "reference": "82b478c69745d8878eb60f9a049a4d584996f73a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/82b478c69745d8878eb60f9a049a4d584996f73a",
+                "reference": "82b478c69745d8878eb60f9a049a4d584996f73a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2",
+                "symfony/polyfill-mbstring": "~1.0"
+            },
+            "conflict": {
+                "symfony/console": "<6.4"
+            },
+            "require-dev": {
+                "ext-iconv": "*",
+                "symfony/console": "^6.4|^7.0",
+                "symfony/http-kernel": "^6.4|^7.0",
+                "symfony/process": "^6.4|^7.0",
+                "symfony/uid": "^6.4|^7.0",
+                "twig/twig": "^3.12"
+            },
+            "bin": [
+                "Resources/bin/var-dump-server"
+            ],
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "Resources/functions/dump.php"
+                ],
+                "psr-4": {
+                    "Symfony\\Component\\VarDumper\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Provides mechanisms for walking through any arbitrary PHP variable",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "debug",
+                "dump"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/var-dumper/tree/v7.2.3"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2025-01-17T11:39:41+00:00"
         },
         {
             "name": "tburry/pquery",
@@ -1524,5 +1687,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.6.0"
 }

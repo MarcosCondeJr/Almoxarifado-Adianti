@@ -23,7 +23,7 @@ class GrupoMaterialService
         }
         $grupoMaterial->fromArray((array)$data);
         $grupoMaterial->store();
-
+        
         W5iSessao::removerObjetoEdicaoSessao('GrupoMaterialForm');
     }
 
