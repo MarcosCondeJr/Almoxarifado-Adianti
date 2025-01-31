@@ -21,8 +21,11 @@ use Adianti\Widget\Form\TButton;
 use Adianti\Widget\Form\TEntry;
 use Adianti\Widget\Form\TForm;
 use Adianti\Widget\Util\TXMLBreadCrumb;
+use Adianti\Widget\Wrapper\TQuickForm;
 use Adianti\Wrapper\BootstrapDatagridWrapper;
 use Adianti\Wrapper\BootstrapFormBuilder;
+use Adianti\Wrapper\BootstrapFormWrapper;
+use Symfony\Component\VarDumper\Cloner\DumperInterface;
 
 class GrupoMaterialDatagrid extends TPage
 {
@@ -62,7 +65,7 @@ class GrupoMaterialDatagrid extends TPage
         $this->datagrid->createModel();
 
         //Formulario de Pesquisas
-        $this->form = new TForm('GrupoMaterialSearch');
+        $this->form = new BootstrapFormBuilder('GrupoMaterialForm');
         $this->form->add($this->datagrid);
         $this->form->style = 'overflow-x:auto';
 
@@ -70,6 +73,10 @@ class GrupoMaterialDatagrid extends TPage
         $cdGrupo         = new TEntry('cd_grupomaterial');
         $nmGrupoMaterial = new TEntry('nm_grupomaterial');
         $dsGrupo         = new TEntry('ds_grupomaterial');
+
+        $cdGrupo->exitOnEnter();
+        $nmGrupoMaterial->exitOnEnter();
+        $dsGrupo->exitOnEnter();
 
         $cdGrupo->setMaxLength(5);
         $nmGrupoMaterial->setMaxLength(40);
@@ -81,12 +88,12 @@ class GrupoMaterialDatagrid extends TPage
 
         $this->form->setData( TSession::getValue('GrupoMaterialDatagrid_filter_data'));
 
-        $cdGrupo->setExitAction(new TAction([$this, 'onSearch'], ['static' => 1]));        
-        $nmGrupoMaterial->setExitAction(new TAction([$this, 'onSearch'], ['static' => 1]));
-        $dsGrupo->setExitAction(new TAction([$this, 'onSearch'], ['static' => 1]));        
+        // $cdGrupo->setExitAction(new TAction([$this, 'onSearch'], ['static' => 1]));        
+        // $nmGrupoMaterial->setExitAction(new TAction([$this, 'onSearch'], ['static' => 1]));
+        // $dsGrupo->setExitAction(new TAction([$this, 'onSearch'], ['static' => 1]));        
 
-        // $btnSearch = $this->form->addAction('', new TAction([$this, 'onSearch']), 'fa:search');
-        // $btnSearch->class = 'btn btn-primary';
+        $btnSearch = $this->form->addAction('', new TAction([$this, 'onSearch']), 'fa:search');
+        $btnSearch->class = 'btn btn-primary';
 
         $tr = new TElement('tr');
         $this->datagrid->prependRow($tr);
@@ -111,6 +118,7 @@ class GrupoMaterialDatagrid extends TPage
         $this->panel = new TPanelGroup('Listagem Grupo de Material');
         $this->panel->addFooter($this->pageNavigation);
         $this->panel->add($this->form);
+        // dump($this->panel->add($this->form));
 
         //Botão de atualizar a pagina
         $btnAtualizar = $this->panel->addHeaderActionLink('Atualizar', new TAction([$this, 'onReload']), 'fa:repeat');
@@ -221,6 +229,8 @@ class GrupoMaterialDatagrid extends TPage
         $data = $this->form->getData();
         TSession::delValue('filtros');
         $filtros = [];
+
+        dump($data);
 
         TSession::setValue('filtros', null);
 
