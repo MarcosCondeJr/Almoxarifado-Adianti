@@ -29,6 +29,7 @@ use Symfony\Component\VarDumper\Cloner\DumperInterface;
 
 class GrupoMaterialDatagrid extends TPage
 {
+    private $form_datagrid;
     private $form;
     private $panel;
     private $datagrid;
@@ -39,6 +40,7 @@ class GrupoMaterialDatagrid extends TPage
     public function __construct()
     {
         parent::__construct();
+        
         $this->datagrid = new BootstrapDatagridWrapper(new TDataGrid);
 
         //Colunas do datagrid
@@ -65,9 +67,8 @@ class GrupoMaterialDatagrid extends TPage
         $this->datagrid->createModel();
 
         //Formulario de Pesquisas
-        $this->form = new BootstrapFormBuilder('GrupoMaterialForm');
+        $this->form = new TForm('GrupoMaterialForm');
         $this->form->add($this->datagrid);
-        $this->form->style = 'overflow-x:auto';
 
         //Campos do formulário
         $cdGrupo         = new TEntry('cd_grupomaterial');
@@ -88,11 +89,9 @@ class GrupoMaterialDatagrid extends TPage
 
         $this->form->setData( TSession::getValue('GrupoMaterialDatagrid_filter_data'));
 
-        // $cdGrupo->setExitAction(new TAction([$this, 'onSearch'], ['static' => 1]));        
-        // $nmGrupoMaterial->setExitAction(new TAction([$this, 'onSearch'], ['static' => 1]));
-        // $dsGrupo->setExitAction(new TAction([$this, 'onSearch'], ['static' => 1]));        
-
-        $btnSearch = $this->form->addAction('', new TAction([$this, 'onSearch']), 'fa:search');
+        $btnSearch = new TButton('search');
+        $btnSearch->setImage('fa:search');
+        $btnSearch->setAction(new TAction([$this, 'onSearch']));
         $btnSearch->class = 'btn btn-primary';
 
         $tr = new TElement('tr');
@@ -103,22 +102,24 @@ class GrupoMaterialDatagrid extends TPage
         $tr->add(TElement::tag('td', $cdGrupo));
         $tr->add(TElement::tag('td', $nmGrupoMaterial));
         $tr->add(TElement::tag('td', $dsGrupo));
-        // $tr->add( TElement::tag('td', $btnSearch));
+        $tr->add( TElement::tag('td', $btnSearch));
 
         $this->form->addField($cdGrupo);
         $this->form->addField($nmGrupoMaterial);
         $this->form->addField($dsGrupo);
+        $this->form->addField($btnSearch);
 
         //Cria a paginação
         $this->pageNavigation = new TPageNavigation();
         $this->pageNavigation->setAction(new TAction([$this, 'onReload']));
         $this->pageNavigation->enableCounters();
 
+        $this->datagrid->add($this->form);
+
         //Cria o Painel
         $this->panel = new TPanelGroup('Listagem Grupo de Material');
         $this->panel->addFooter($this->pageNavigation);
         $this->panel->add($this->form);
-        // dump($this->panel->add($this->form));
 
         //Botão de atualizar a pagina
         $btnAtualizar = $this->panel->addHeaderActionLink('Atualizar', new TAction([$this, 'onReload']), 'fa:repeat');
@@ -177,8 +178,8 @@ class GrupoMaterialDatagrid extends TPage
             }
 
             $criterio->resetProperties();
-            TSession::delValue('filtros');
             $count = $repository->count($criterio);
+            TSession::delValue('filtros');
 
             $this->pageNavigation->setCount($count);
             $this->pageNavigation->setProperties($param);
@@ -230,8 +231,6 @@ class GrupoMaterialDatagrid extends TPage
         TSession::delValue('filtros');
         $filtros = [];
 
-        dump($data);
-
         TSession::setValue('filtros', null);
 
         if (isset($data->cd_grupomaterial) && is_numeric($data->cd_grupomaterial) && !empty($data->cd_grupomaterial)) {
@@ -247,6 +246,8 @@ class GrupoMaterialDatagrid extends TPage
         }
 
         TSession::setValue('filtros', $filtros);
+        TSession::setValue('GrupoMaterialDatagrid_filter_data', $data);
+
         $this->onReload($param);
     }
 
