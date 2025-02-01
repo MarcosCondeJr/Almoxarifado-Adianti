@@ -76,9 +76,9 @@ class GrupoMaterialDatagrid extends TPage
         $this->form->add($this->datagrid);
 
         //Campos do formulário
-        $cdGrupo         = new TEntry('cd_grupomaterial');
-        $nmGrupoMaterial = new TEntry('nm_grupomaterial');
-        $dsGrupo         = new TEntry('ds_grupomaterial');
+        $cdGrupo         = new TEntry('cd_grupomaterial_datagrid');
+        $nmGrupoMaterial = new TEntry('nm_grupomaterial_datagrid');
+        $dsGrupo         = new TEntry('ds_grupomaterial_datagrid');
 
         $cdGrupo->exitOnEnter();
         $nmGrupoMaterial->exitOnEnter();
@@ -248,19 +248,19 @@ class GrupoMaterialDatagrid extends TPage
 
         TSession::setValue('filtros', null);
 
-        if (isset($data->cd_grupomaterial) && is_numeric($data->cd_grupomaterial) && !empty($data->cd_grupomaterial)) 
+        if (isset($data->cd_grupomaterial_datagrid) && is_numeric($data->cd_grupomaterial_datagrid) && !empty($data->cd_grupomaterial_datagrid)) 
         {
-            $filtros[] = new TFilter('cd_grupomaterial', '=', "{$data->cd_grupomaterial}");
+            $filtros[] = new TFilter('cd_grupomaterial', '=', "{$data->cd_grupomaterial_datagrid}");
         }
 
-        if (isset($data->nm_grupomaterial) && !empty($data->nm_grupomaterial)) 
+        if (isset($data->nm_grupomaterial_datagrid) && !empty($data->nm_grupomaterial_datagrid)) 
         {
-            $filtros[] = new TFilter('unaccent(nm_grupomaterial)', 'ILIKE', "%{$data->nm_grupomaterial}%");
+            $filtros[] = new TFilter('unaccent(nm_grupomaterial)', 'ILIKE', "%{$data->nm_grupomaterial_datagrid}%");
         }
 
-        if (isset($data->ds_grupomaterial) && !empty($data->ds_grupomaterial)) 
+        if (isset($data->ds_grupomaterial_datagrid) && !empty($data->ds_grupomaterial_datagrid)) 
         {
-            $filtros[] = new TFilter('unaccent(ds_grupomaterial)', 'ILIKE', "%{$data->ds_grupomaterial}%");
+            $filtros[] = new TFilter('unaccent(ds_grupomaterial)', 'ILIKE', "%{$data->ds_grupomaterial_datagrid}%");
         }
 
         TSession::setValue('filtros', $filtros);
