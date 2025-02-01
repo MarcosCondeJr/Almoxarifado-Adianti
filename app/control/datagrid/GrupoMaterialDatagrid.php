@@ -52,6 +52,11 @@ class GrupoMaterialDatagrid extends TPage
         $colNmGrupo->setAction(new TAction([$this, 'onReload']), ['order' => 'nm_grupomaterial']);
         $colDsGrupo->setAction(new TAction([$this, 'onReload']), ['order' => 'ds_grupomaterial']);
 
+        $colDsGrupo->setTransformer(function ($value, $object)
+        {
+            return LimitarDescricao::transformer($value, $object);
+        });
+
         //Adiciona as colunas no datadrid
         $this->datagrid->addColumn($colCdGrupo);
         $this->datagrid->addColumn($colNmGrupo);
@@ -78,8 +83,8 @@ class GrupoMaterialDatagrid extends TPage
         $cdGrupo->exitOnEnter();
         $nmGrupoMaterial->exitOnEnter();
         $dsGrupo->exitOnEnter();
-
-        $cdGrupo->setMaxLength(5);
+        
+        $cdGrupo->setMask('99999');
         $nmGrupoMaterial->setMaxLength(40);
         $dsGrupo->setMaxLength(60);
 
@@ -144,6 +149,7 @@ class GrupoMaterialDatagrid extends TPage
         try 
         {
             TTransaction::open('conexao');
+            $data = $this->form->getData();
 
             //Istancia o Repositorio (model)
             $repository = new TRepository('GrupoMaterial');
@@ -187,6 +193,7 @@ class GrupoMaterialDatagrid extends TPage
             $this->pageNavigation->setCount($count);
             $this->pageNavigation->setProperties($param);
             $this->pageNavigation->setLimit($limit);
+            $this->form->setData($data);
 
             TTransaction::close();
             $this->loaded = true;
