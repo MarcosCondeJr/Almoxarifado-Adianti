@@ -187,9 +187,9 @@ class GrupoMaterialDatagrid extends TPage
             }
 
             $criterio->resetProperties();
-            $count = $repository->count($criterio);
             TSession::delValue('filtros');
-
+            $count = $repository->count($criterio);
+            
             $this->pageNavigation->setCount($count);
             $this->pageNavigation->setProperties($param);
             $this->pageNavigation->setLimit($limit);
@@ -264,8 +264,6 @@ class GrupoMaterialDatagrid extends TPage
         }
 
         TSession::setValue('filtros', $filtros);
-        TSession::setValue('GrupoMaterialDatagrid_filter_data', $data);
-
         $this->onReload($param);
     }
 

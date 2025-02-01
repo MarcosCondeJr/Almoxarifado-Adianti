@@ -57,7 +57,9 @@ class GrupoMaterialForm extends TPage
         try {
             TTransaction::open('conexao');
             $data = $this->form->getData();
+            dump($data);
             $this->form->validate();
+
 
             $this->service = new GrupoMaterialService();
             $this->service->onSave($data);
