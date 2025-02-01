@@ -52,6 +52,11 @@ class GrupoMaterialDatagrid extends TPage
         $colNmGrupo->setAction(new TAction([$this, 'onReload']), ['order' => 'nm_grupomaterial']);
         $colDsGrupo->setAction(new TAction([$this, 'onReload']), ['order' => 'ds_grupomaterial']);
 
+        $colDsGrupo->setTransformer(function ($value, $object)
+        {
+            return LimitarDescricao::transformer($value, $object);
+        });
+
         //Adiciona as colunas no datadrid
         $this->datagrid->addColumn($colCdGrupo);
         $this->datagrid->addColumn($colNmGrupo);
@@ -78,8 +83,8 @@ class GrupoMaterialDatagrid extends TPage
         $cdGrupo->exitOnEnter();
         $nmGrupoMaterial->exitOnEnter();
         $dsGrupo->exitOnEnter();
-
-        $cdGrupo->setMaxLength(5);
+        
+        $cdGrupo->setMask('99999');
         $nmGrupoMaterial->setMaxLength(40);
         $dsGrupo->setMaxLength(60);
 
@@ -120,6 +125,7 @@ class GrupoMaterialDatagrid extends TPage
         $this->panel = new TPanelGroup('Listagem Grupo de Material');
         $this->panel->addFooter($this->pageNavigation);
         $this->panel->add($this->form);
+        // $this->panel->add($this->datagrid);
 
         //Botão de atualizar a pagina
         $btnAtualizar = $this->panel->addHeaderActionLink('Atualizar', new TAction([$this, 'onReload']), 'fa:repeat');
@@ -140,8 +146,10 @@ class GrupoMaterialDatagrid extends TPage
 
     public function onReload($param = null)
     {
-        try {
+        try 
+        {
             TTransaction::open('conexao');
+            $data = $this->form->getData();
 
             //Istancia o Repositorio (model)
             $repository = new TRepository('GrupoMaterial');
@@ -150,7 +158,8 @@ class GrupoMaterialDatagrid extends TPage
             //istancia o criterio
             $criterio = new TCriteria;
 
-            if (empty($param['order'])) {
+            if (empty($param['order'])) 
+            {
                 $param['order'] = 'id_grupomaterial';
             }
 
@@ -184,10 +193,13 @@ class GrupoMaterialDatagrid extends TPage
             $this->pageNavigation->setCount($count);
             $this->pageNavigation->setProperties($param);
             $this->pageNavigation->setLimit($limit);
+            $this->form->setData($data);
 
             TTransaction::close();
             $this->loaded = true;
-        } catch (Exception $e) {
+        } 
+        catch (Exception $e) 
+        {
             new TMessage('error', $e->getMessage());
             TTransaction::rollback();
         }
@@ -204,7 +216,8 @@ class GrupoMaterialDatagrid extends TPage
 
     public function delete($param)
     {
-        try {
+        try 
+        {
             TTransaction::open('conexao');
 
             $key = $param['key'];
@@ -214,7 +227,9 @@ class GrupoMaterialDatagrid extends TPage
             $service->onDelete($key, $name);
 
             TTransaction::close();
-        } catch (Exception $e) {
+        } 
+        catch (Exception $e) 
+        {
             new TMessage('error', $e->getMessage());
             TTransaction::rollback();
         }
@@ -233,16 +248,19 @@ class GrupoMaterialDatagrid extends TPage
 
         TSession::setValue('filtros', null);
 
-        if (isset($data->cd_grupomaterial) && is_numeric($data->cd_grupomaterial) && !empty($data->cd_grupomaterial)) {
+        if (isset($data->cd_grupomaterial) && is_numeric($data->cd_grupomaterial) && !empty($data->cd_grupomaterial)) 
+        {
             $filtros[] = new TFilter('cd_grupomaterial', '=', "{$data->cd_grupomaterial}");
         }
 
-        if (isset($data->nm_grupomaterial) && !empty($data->nm_grupomaterial)) {
-            $filtros[] = new TFilter('unaccent(nm_grupomaterial)', 'ILIKE', "{$data->nm_grupomaterial}");
+        if (isset($data->nm_grupomaterial) && !empty($data->nm_grupomaterial)) 
+        {
+            $filtros[] = new TFilter('unaccent(nm_grupomaterial)', 'ILIKE', "%{$data->nm_grupomaterial}%");
         }
 
-        if (isset($data->ds_grupomaterial) && !empty($data->ds_grupomaterial)) {
-            $filtros[] = new TFilter('unaccent(ds_grupomaterial)', 'ILIKE', "{$data->ds_grupomaterial}");
+        if (isset($data->ds_grupomaterial) && !empty($data->ds_grupomaterial)) 
+        {
+            $filtros[] = new TFilter('unaccent(ds_grupomaterial)', 'ILIKE', "%{$data->ds_grupomaterial}%");
         }
 
         TSession::setValue('filtros', $filtros);
