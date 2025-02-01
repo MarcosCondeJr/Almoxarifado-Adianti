@@ -29,22 +29,22 @@ class AlmoxarifadoUtils
         {
             $btnEditar = $form->addHeaderAction('Editar', new TAction([$classe, 'habilitarCampos'], ['enable' => 1]), 'fas:far fa-edit');
             $btnEditar->addStyleClass('tbutton_editar');
-            $btnEditar->class = 'btn btn-outline-primary';
+            $btnEditar->class = 'btn btn-outline-primary me-1 tbutton_editar';
 
-            // Adiciona flex para a exibição
-            TScript::create("document.querySelector('.tbutton_editar').style.display = 'flex';");
-            TScript::create("document.querySelector('.tbutton_editar').style.justifyContent = 'flex-start';");
-            TScript::create("document.querySelector('.tbutton_editar').style.marginRight = '10px';");  // Adicionando margem para o espaço
+            $btnCancelar = $form->addAction('Cancelar', new TAction([$classe, 'onClose']), 'fa:ban');
+            $btnCancelar->class = 'btn btn-danger tbutton_cancelar';
         }
         else
         {
             $btnClose = $form->addHeaderAction('Fechar', new TAction([$classe, 'onClose']), 'fa: fa-times');
-            $btnClose->class = 'btn btn-outline-danger';
-            TScript::create("document.querySelector('.btn-outline-danger').style.marginLeft = 'auto';");  // Empurra o botão para a direita
+            $btnClose->class = 'btn btn-outline-danger order-2';
             
             //Botão de Salvar
             $btnSave = $form->addAction('Salvar', new TAction([$classe, 'onSave']), 'fa:save');
-            $btnSave->class = 'btn btn-success';
+            $btnSave->class = 'btn btn-success tbutton_salvar';
+
+            $btnLimpar = $form->addAction('Limpar', new TAction([$classe, 'onClear']), 'fa:eraser red');
+            $btnLimpar->class = 'btn btn-outline-secondary tbutton_limpar';
         }
     }
 }

@@ -9,19 +9,21 @@ class GrupoMaterialService
 {
     public function onSave($data)
     {
-        $grupoMaterial = new GrupoMaterial();
-        $grupoMaterial->fromArray((array)$data);
-
-        // $codigo = GrupoMaterial::where('cd_grupomaterial', '-', $data->cd_grupomaterial)->last();
-
-        var_dump($data->id_grupomaterial);
-        
-        // if($grupoMaterial->cd_grupomate)
+        $grupoMaterial = new GrupoMaterial();  
+        $codigoExiste = GrupoMaterial::where('cd_grupomaterial', '=', $data->cd_grupomaterial)->last();
 
         W5iSessao::obterObjetoEdicaoSessao($grupoMaterial, 'id_grupomaterial', null, 'GrupoMaterialForm');
 
-        // $grupoMaterial->store();
-
+        if(empty($grupoMaterial->id_grupomaterial))
+        {
+            if($codigoExiste != null)
+            {
+                $data->cd_grupomaterial = $data->cd_grupomaterial + 1;
+            }
+        }
+        $grupoMaterial->fromArray((array)$data);
+        $grupoMaterial->store();
+        
         W5iSessao::removerObjetoEdicaoSessao('GrupoMaterialForm');
     }
 

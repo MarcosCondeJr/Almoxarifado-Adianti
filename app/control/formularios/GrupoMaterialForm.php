@@ -61,9 +61,9 @@ class GrupoMaterialForm extends TPage
 
             $this->service = new GrupoMaterialService();
             $this->service->onSave($data);
-
-            // TApplication::loadPage('GrupoMaterialDatagrid', 'onReload');
-            // TToast::show('success', 'Cadastrado com Sucesso ', 'top right', 'far:check-circle');
+            
+            TApplication::loadPage('GrupoMaterialDatagrid', 'onReload');
+            TToast::show('success', 'Cadastrado com Sucesso ', 'top right', 'far:check-circle');
             TTransaction::close();
         } 
         catch (Exception $e) 
@@ -78,6 +78,7 @@ class GrupoMaterialForm extends TPage
     {
         try 
         {
+            // dump($param);
             TTransaction::open('conexao');
             $key = $param['key'];
 
@@ -129,13 +130,30 @@ class GrupoMaterialForm extends TPage
             $data = $this->form->getData();
             TEntry::enableField('GrupoMaterialForm', 'nm_grupomaterial');
             TText::enableField('GrupoMaterialForm', 'ds_grupomaterial');
+
+            //Desabilita butão
             TScript::create("document.querySelector('.tbutton_editar').style.display = 'none';");
             TForm::sendData('GrupoMaterialForm', $data);
         } 
         else 
         {
+            //Desabilita o botão de salvar e limpar
+            TScript::create("document.querySelector('.tbutton_salvar').style.display = 'none';");
+            TScript::create("document.querySelector('.tbutton_limpar').style.display = 'none';");
+
             TEntry::disableField('GrupoMaterialForm', 'nm_grupomaterial');
             TText::disableField('GrupoMaterialForm', 'ds_grupomaterial');
         }
+    }
+
+    public function onClear()
+    {
+        //Pega o codigo existente e manten na tela
+        $data = $this->form->getData();
+        $this->form->clear();
+        
+        $item = new stdClass();
+        $item->cd_grupomaterial =  $data->cd_grupomaterial;
+        TForm::sendData('GrupoMaterialForm', $item, false, false);
     }
 }
