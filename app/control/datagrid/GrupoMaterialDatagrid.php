@@ -120,6 +120,7 @@ class GrupoMaterialDatagrid extends TPage
         $this->panel = new TPanelGroup('Listagem Grupo de Material');
         $this->panel->addFooter($this->pageNavigation);
         $this->panel->add($this->form);
+        // $this->panel->add($this->datagrid);
 
         //Botão de atualizar a pagina
         $btnAtualizar = $this->panel->addHeaderActionLink('Atualizar', new TAction([$this, 'onReload']), 'fa:repeat');
