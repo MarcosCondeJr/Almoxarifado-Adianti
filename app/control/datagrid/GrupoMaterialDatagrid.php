@@ -72,7 +72,7 @@ class GrupoMaterialDatagrid extends TPage
         $this->datagrid->createModel();
 
         //Formulario de Pesquisas
-        $this->form = new TForm('GrupoMaterialForm');
+        $this->form = new TForm('GrupoMaterialFormDatagrid');
         $this->form->add($this->datagrid);
 
         //Campos do formulário
